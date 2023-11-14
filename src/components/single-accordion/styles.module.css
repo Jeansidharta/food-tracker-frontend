@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-gray);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftSide {
+  display: flex;
+  column-gap: 4px;
+  transition: 200ms;
+}
+
+.leftSide > svg {
+  transition: 200ms;
+}
+
+.leftSideClose {
+  transform: rotate(-90deg);
+}
+
+.creationDate {
+  color: var(--color-gray);
+  border-left: 2px solid var(--color-gray);
+  padding-left: 8px;
+  margin-left: 8px;
+}
