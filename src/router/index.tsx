@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PageIngredient } from "../pages/ingredient/page";
 import { ROUTES } from "./routes";
 import PageDish from "../pages/dish/page";
@@ -10,36 +10,83 @@ import { PageMeal } from "../pages/meal";
 import { PageNewDish } from "../pages/dish/new/page";
 import { PageNewMeal } from "../pages/meal/new/page";
 import { PageNewIngredient } from "../pages/ingredient/new/page";
+import { pageEditDishLoader } from "../pages/dish/:dish-id/edit/loader";
+import { pageNewMealLoader } from "../pages/meal/new/loader";
+import { pageIngredientsLoader } from "../pages/ingredient/loader";
+import { pageNewDishLoader } from "../pages/dish/new/loader";
+import { pageDishLoader } from "../pages/dish/loader";
+import { pageMealLoader } from "../pages/meal/loader";
 
-export const Router: FC<{}> = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<LayoutHeader />}>
-					{/* New Pages */}
-					<Route path={ROUTES.MEAL.NEW.path} element={<PageNewMeal />} />
-					<Route path={ROUTES.DISH.NEW.path} element={<PageNewDish />} />
-					<Route
-						path={ROUTES.INGREDIENT.NEW.path}
-						element={<PageNewIngredient />}
-					/>
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <LayoutHeader />,
+		children: [
+			// ---------- LIST ------------
+			{
+				path: ROUTES.MEAL.path,
+				element: <LayoutActions />,
+				children: [
+					{
+						path: ROUTES.MEAL.path,
+						element: <PageMeal />,
+						loader: pageMealLoader,
+					},
+				],
+			},
+			{
+				path: ROUTES.DISH.path,
+				element: <LayoutActions />,
+				children: [
+					{
+						path: ROUTES.DISH.path,
+						element: <PageDish />,
+						loader: pageDishLoader,
+					},
+				],
+			},
+			{
+				path: ROUTES.INGREDIENT.path,
+				element: <LayoutActions />,
+				children: [
+					{
+						path: ROUTES.INGREDIENT.path,
+						element: <PageIngredient />,
+						loader: pageIngredientsLoader,
+					},
+				],
+			},
 
-					{/* Edit Pages */}
-					<Route path={ROUTES.DISH.ID.EDIT.path} element={<PageEditDish />} />
-					<Route path={ROUTES.MEAL.ID.EDIT.path} element={<PageEditDish />} />
+			// ---------- NEW -------------
+			{
+				path: ROUTES.INGREDIENT.NEW.path,
+				element: <PageNewIngredient />,
+			},
+			{
+				path: ROUTES.DISH.NEW.path,
+				element: <PageNewDish />,
+				loader: pageNewDishLoader,
+			},
+			{
+				path: ROUTES.MEAL.NEW.path,
+				element: <PageNewMeal />,
+				loader: pageNewMealLoader,
+			},
 
-					{/* List Pages */}
-					<Route path={ROUTES.INGREDIENT.path} element={<LayoutActions />}>
-						<Route path={ROUTES.INGREDIENT.path} element={<PageIngredient />} />
-					</Route>
-					<Route path={ROUTES.DISH.path} element={<LayoutActions />}>
-						<Route path={ROUTES.DISH.path} element={<PageDish />} />
-					</Route>
-					<Route path={ROUTES.MEAL.path} element={<LayoutActions />}>
-						<Route path={ROUTES.MEAL.path} element={<PageMeal />} />
-					</Route>
-				</Route>
-			</Routes>
-		</BrowserRouter>
-	);
+			// ---------- EDIT ------------
+			{
+				path: ROUTES.MEAL.ID.EDIT.path,
+				element: <PageEditDish />,
+			},
+			{
+				path: ROUTES.DISH.ID.EDIT.path,
+				element: <PageEditDish />,
+				loader: pageEditDishLoader,
+			},
+		],
+	},
+]);
+
+export const Router: FC<unknown> = () => {
+	return <RouterProvider router={router} />;
 };

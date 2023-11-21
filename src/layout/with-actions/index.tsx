@@ -3,7 +3,7 @@ import style from "./style.module.css";
 import { FC } from "react";
 import { ROUTES } from "../../router/routes";
 
-export const LayoutActions: FC<{}> = () => {
+export const LayoutActions: FC = () => {
 	return (
 		<>
 			<Outlet />

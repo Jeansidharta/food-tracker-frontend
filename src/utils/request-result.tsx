@@ -1,6 +1,6 @@
 import { Loading } from "../components/loading";
 
-export const requestResult = <T = any, E = any>(
+export const requestResult = <T = unknown, E = unknown>(
 	requestResult: { isLoading: boolean; data: T; error: E },
 	onDone: (result: NonNullable<T>) => React.ReactNode,
 ) => {

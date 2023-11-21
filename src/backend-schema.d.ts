@@ -147,7 +147,7 @@ export interface paths {
       };
     };
   };
-  "/dish/{dish_id}": {
+  "/dish/{dish_id}/": {
     get: {
       parameters: {
         path: {
@@ -180,6 +180,59 @@ export interface paths {
                   total_weight: number;
                 };
               }) | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          dish_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            dish_ingredients?: {
+                /** Format: int64 */
+                ingredient_id: number;
+                /** Format: int64 */
+                weight: number;
+              }[] | null;
+            name: string;
+            /** Format: int64 */
+            prep_date?: number | null;
+            /** Format: int64 */
+            total_weight?: number | null;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: ([{
+                  /** Format: int64 */
+                  creation_date: number;
+                  /** Format: int64 */
+                  id: number;
+                  name?: string | null;
+                  /** Format: int64 */
+                  prep_date?: number | null;
+                  /** Format: int64 */
+                  total_weight: number;
+                }, {
+                    /** Format: int64 */
+                    creation_date: number;
+                    /** Format: int64 */
+                    dish_id: number;
+                    /** Format: int64 */
+                    ingredient_id: number;
+                    /** Format: int64 */
+                    weight: number;
+                  }[]]) | null;
               message: string;
             };
           };
@@ -328,15 +381,9 @@ export interface paths {
                   creation_date: number;
                   description?: string | null;
                   /** Format: int64 */
-                  desire_to_eat?: number | null;
-                  /** Format: int64 */
                   duration?: number | null;
                   /** Format: int64 */
                   eat_date?: number | null;
-                  /** Format: int64 */
-                  fullness_afterwards?: number | null;
-                  /** Format: int64 */
-                  hunger_level?: number | null;
                   /** Format: int64 */
                   id: number;
                 })[]) | null;
@@ -350,23 +397,19 @@ export interface paths {
       requestBody: {
         content: {
           "application/json": {
-            description?: string | null;
-            /** Format: int64 */
-            desire_to_eat?: number | null;
-            dishes: {
+            components: ({
                 /** Format: int64 */
-                dish_id: number;
+                dish_id?: number | null;
+                /** Format: int64 */
+                ingredient_id?: number | null;
                 /** Format: int64 */
                 weight: number;
-              }[];
+              })[];
+            description?: string | null;
             /** Format: int64 */
             duration?: number | null;
             /** Format: int64 */
             eat_date?: number | null;
-            /** Format: int64 */
-            fullness_afterwards?: number | null;
-            /** Format: int64 */
-            hunger_level?: number | null;
           };
         };
       };
@@ -380,15 +423,9 @@ export interface paths {
                   creation_date: number;
                   description?: string | null;
                   /** Format: int64 */
-                  desire_to_eat?: number | null;
-                  /** Format: int64 */
                   duration?: number | null;
                   /** Format: int64 */
                   eat_date?: number | null;
-                  /** Format: int64 */
-                  fullness_afterwards?: number | null;
-                  /** Format: int64 */
-                  hunger_level?: number | null;
                   /** Format: int64 */
                   id: number;
                 };
@@ -396,7 +433,17 @@ export interface paths {
                     /** Format: int64 */
                     creation_date: number;
                     /** Format: int64 */
-                    dish_id: number;
+                    id: number;
+                    /** Format: int64 */
+                    meal_id: number;
+                    /** Format: int64 */
+                    weight: number;
+                  }[];
+                meal_ingredients: {
+                    /** Format: int64 */
+                    creation_date: number;
+                    /** Format: int64 */
+                    id: number;
                     /** Format: int64 */
                     meal_id: number;
                     /** Format: int64 */
@@ -410,7 +457,80 @@ export interface paths {
       };
     };
   };
-  "/meal/{meal_id}": {
+  "/meal/description/": {
+    get: {
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: string[] | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/meal/component/": {
+    get: {
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: ({
+                components: ({
+                    component_type: string;
+                    /** Format: int64 */
+                    id: number;
+                    name?: string | null;
+                  })[];
+              }) | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          meal_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            /** Format: int64 */
+            component_id: number;
+            /** @enum {string} */
+            component_type: "Dish" | "Ingredient";
+            /** Format: int64 */
+            weight: number;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: {
+                /** Format: int64 */
+                component_id: number;
+                /** Format: int64 */
+                creation_date: number;
+                /** Format: int64 */
+                meal_id: number;
+                /** Format: int64 */
+                weight: number;
+              } | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/meal/{meal_id}/": {
     get: {
       parameters: {
         path: {
@@ -424,8 +544,15 @@ export interface paths {
               data?: ({
                 dishes: ({
                     /** Format: int64 */
-                    dish_id: number;
-                    dish_name?: string | null;
+                    id: number;
+                    name?: string | null;
+                    /** Format: int64 */
+                    weight: number;
+                  })[];
+                ingredients: ({
+                    /** Format: int64 */
+                    id: number;
+                    name?: string | null;
                     /** Format: int64 */
                     weight: number;
                   })[];
@@ -434,18 +561,80 @@ export interface paths {
                   creation_date: number;
                   description?: string | null;
                   /** Format: int64 */
-                  desire_to_eat?: number | null;
+                  duration?: number | null;
+                  /** Format: int64 */
+                  eat_date?: number | null;
+                  /** Format: int64 */
+                  id: number;
+                };
+              }) | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          meal_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            components: ({
+                /** Format: int64 */
+                dish_id?: number | null;
+                /** Format: int64 */
+                ingredient_id?: number | null;
+                /** Format: int64 */
+                weight: number;
+              })[];
+            description?: string | null;
+            /** Format: int64 */
+            duration?: number | null;
+            /** Format: int64 */
+            eat_date?: number | null;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: ({
+                meal: {
+                  /** Format: int64 */
+                  creation_date: number;
+                  description?: string | null;
                   /** Format: int64 */
                   duration?: number | null;
                   /** Format: int64 */
                   eat_date?: number | null;
                   /** Format: int64 */
-                  fullness_afterwards?: number | null;
-                  /** Format: int64 */
-                  hunger_level?: number | null;
-                  /** Format: int64 */
                   id: number;
                 };
+                meal_dishes: {
+                    /** Format: int64 */
+                    creation_date: number;
+                    /** Format: int64 */
+                    id: number;
+                    /** Format: int64 */
+                    meal_id: number;
+                    /** Format: int64 */
+                    weight: number;
+                  }[];
+                meal_ingredients: {
+                    /** Format: int64 */
+                    creation_date: number;
+                    /** Format: int64 */
+                    id: number;
+                    /** Format: int64 */
+                    meal_id: number;
+                    /** Format: int64 */
+                    weight: number;
+                  }[];
               }) | null;
               message: string;
             };
@@ -464,20 +653,6 @@ export interface paths {
           content: {
             "application/json": {
               data?: boolean | null;
-              message: string;
-            };
-          };
-        };
-      };
-    };
-  };
-  "/meal/description/": {
-    get: {
-      responses: {
-        200: {
-          content: {
-            "application/json": {
-              data?: string[] | null;
               message: string;
             };
           };
@@ -536,6 +711,103 @@ export interface paths {
           content: {
             "application/json": {
               data?: boolean | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/meal/{meal_id}/ingredient/": {
+    post: {
+      parameters: {
+        path: {
+          meal_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            /** Format: int64 */
+            ingredient_id: number;
+            /** Format: int64 */
+            weight: number;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: {
+                /** Format: int64 */
+                creation_date: number;
+                /** Format: int64 */
+                ingredient_id: number;
+                /** Format: int64 */
+                meal_id: number;
+                /** Format: int64 */
+                weight: number;
+              } | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/meal/{meal_id}/ingredient/{ingredient_id}": {
+    delete: {
+      parameters: {
+        path: {
+          ingredient_id: number;
+          meal_id: number;
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: boolean | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/meal/{meal_id}/eat_date/": {
+    post: {
+      parameters: {
+        path: {
+          meal_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            /** Format: int64 */
+            eat_date: number;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: ({
+                meal: {
+                  /** Format: int64 */
+                  creation_date: number;
+                  description?: string | null;
+                  /** Format: int64 */
+                  duration?: number | null;
+                  /** Format: int64 */
+                  eat_date?: number | null;
+                  /** Format: int64 */
+                  id: number;
+                };
+              }) | null;
               message: string;
             };
           };

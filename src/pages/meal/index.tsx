@@ -1,26 +1,18 @@
 import { FC } from "react";
 import styles from "./styles.module.css";
-import { useMealList } from "../../api/meals";
-import { RefreshButton } from "../../components/refresh-button";
-import { requestResult } from "../../utils/request-result";
 import { ShortMeal } from "../../components/short-meal";
+import { usePageMealLoaderData } from "./loader";
 
-export const PageMeal: FC<{}> = ({ }) => {
-	let mealListRequest = useMealList();
+export const PageMeal: FC = () => {
+	const mealList = usePageMealLoaderData();
 
 	return (
 		<div className={styles.main}>
 			<div className={styles.titleContainer}>
 				<h1>Meals</h1>
-				<RefreshButton
-					onClick={() => mealListRequest.refresh()}
-					isLoading={mealListRequest.isLoading}
-				/>
 			</div>
 			<section className={styles.mealsContainer}>
-				{requestResult(mealListRequest, (dish) => {
-					return dish.map((meal) => <ShortMeal meal={meal} key={meal.id} />);
-				})}
+				{mealList?.map((meal) => <ShortMeal meal={meal} key={meal.id} />)}
 			</section>
 		</div>
 	);

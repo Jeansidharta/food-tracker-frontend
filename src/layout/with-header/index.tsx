@@ -11,7 +11,7 @@ const links: { href: (typeof ROUTES)[keyof typeof ROUTES]; text: string }[] = [
 ];
 
 function Navbar() {
-	let { pathname } = useLocation();
+	const { pathname } = useLocation();
 	return (
 		<header className={styles.navbar}>
 			<img src={logo} width={32} height={32} alt="logo" />
@@ -33,7 +33,7 @@ function Navbar() {
 	);
 }
 
-export const LayoutHeader: FC<{}> = () => {
+export const LayoutHeader: FC<object> = () => {
 	return (
 		<>
 			<Navbar />

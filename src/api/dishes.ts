@@ -2,10 +2,10 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "./fetcher";
 import useSWRMutation from "swr/mutation";
 
-let getDishFetcher = fetcher.path("/dish/{dish_id}").method("get").create();
+const getDishFetcher = fetcher.path("/dish/{dish_id}/").method("get").create();
 
 export function useDishGet(id: number) {
-	const response = useSWR(["GET /dish/{dish_id}", id], ([_, id]) =>
+	const response = useSWR(["GET /dish/{dish_id}", id], ([, id]) =>
 		getDishFetcher({ dish_id: id }),
 	);
 	const { data, mutate, ...values } = response;
@@ -32,7 +32,7 @@ export function useDishesList() {
 	} as const;
 }
 
-let newDishFetcher = fetcher.path("/dish/").method("post").create();
+const newDishFetcher = fetcher.path("/dish/").method("post").create();
 
 export type NewDishRequest = Parameters<typeof newDishFetcher>[0];
 
@@ -52,7 +52,7 @@ export function useNewDish() {
 	} as const;
 }
 
-let deleteIngredientFromDishFetcher = fetcher
+const deleteIngredientFromDishFetcher = fetcher
 	.path("/dish/{dish_id}/ingredient/{ingredient_id}")
 	.method("delete")
 	.create();
@@ -65,7 +65,7 @@ export function useDeleteIngredientFromDish() {
 	const response = useSWRMutation(
 		"DELETE /dish/{dish_id}/ingredient/{ingredient_id}",
 		async (_key: string, { arg }: { arg: DeleteIngredientFromDishRequest }) => {
-			let data = await deleteIngredientFromDishFetcher(arg);
+			const data = await deleteIngredientFromDishFetcher(arg);
 			mutate(["GET /dish/{dish_id}", arg.dish_id], undefined, {
 				revalidate: true,
 			});
@@ -81,7 +81,7 @@ export function useDeleteIngredientFromDish() {
 	} as const;
 }
 
-let addIngredientToDishFetcher = fetcher
+const addIngredientToDishFetcher = fetcher
 	.path("/dish/{dish_id}/ingredient/")
 	.method("post")
 	.create();
@@ -94,7 +94,7 @@ export function useAddIngredientToDish() {
 	const response = useSWRMutation(
 		"POST /dish/{dish_id}/ingredient/",
 		async (_key: string, { arg }: { arg: AddIngredientToDishRequest }) => {
-			let data = await addIngredientToDishFetcher(arg, {});
+			const data = await addIngredientToDishFetcher(arg, {});
 			mutate(["GET /dish/{dish_id}", arg.dish_id], undefined, {
 				revalidate: true,
 			});
@@ -110,8 +110,8 @@ export function useAddIngredientToDish() {
 	} as const;
 }
 
-let deleteDishFetcher = fetcher
-	.path("/dish/{dish_id}")
+const deleteDishFetcher = fetcher
+	.path("/dish/{dish_id}/")
 	.method("delete")
 	.create();
 
@@ -121,7 +121,7 @@ export function useDeleteDish() {
 	const response = useSWRMutation(
 		"DELETE /dish/{dish_id}",
 		async (_key: string, { arg }: { arg: DeleteDishRequest }) => {
-			let data = await deleteDishFetcher(arg);
+			const data = await deleteDishFetcher(arg);
 			mutate("GET /dish", undefined, { revalidate: true });
 			return data;
 		},

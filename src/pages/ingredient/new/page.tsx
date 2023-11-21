@@ -9,7 +9,7 @@ type ExtractFormValue<T> = T extends ReturnType<typeof useForm<infer V>>
   ? V
   : never;
 
-export const PageNewIngredient: FC<{}> = ({}) => {
+export const PageNewIngredient: FC<object> = () => {
   const navigate = useNavigate();
   const { newIngredient, isMutating } = useNewIngredient();
   const form = useForm({
