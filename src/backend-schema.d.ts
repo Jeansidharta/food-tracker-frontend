@@ -91,7 +91,8 @@ export interface paths {
                   creation_date: number;
                   /** Format: int64 */
                   id: number;
-                  is_finished: boolean;
+                  /** Format: int64 */
+                  is_finished: number;
                   name?: string | null;
                   /** Format: int64 */
                   prep_date?: number | null;
