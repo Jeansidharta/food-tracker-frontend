@@ -10,6 +10,11 @@
     column-gap: 8px;
     padding-top: 8px;
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .component_item {
       display: flex;
       flex-direction: column;

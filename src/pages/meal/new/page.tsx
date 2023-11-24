@@ -54,7 +54,7 @@ function formValuesToRequest(values: FormValues): NewMealRequest {
 
 export const PageNewMeal: FC = () => {
 	const [active, setActive] = useState<STEPS>(0);
-	const { isMutating, newMeal } = useNewMeal();
+	const { isMutating, newMeal, data: newMealData } = useNewMeal();
 	const [dishes, ingredients, mealDescriptions] = usePageNewMealLoaderData();
 
 	const form = useForm<FormValues>({
@@ -205,7 +205,13 @@ export const PageNewMeal: FC = () => {
 
 					<p>
 						Would you like to{" "}
-						<Anchor component={Link} to={ROUTES.MEAL.ID.path} variant="fill">
+						<Anchor
+							component={Link}
+							to={ROUTES.MEAL.ID.buildPath({
+								meal_id: newMealData?.meal.id || NaN,
+							})}
+							variant="fill"
+						>
 							view the Meal?
 						</Anchor>
 					</p>

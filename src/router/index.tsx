@@ -18,12 +18,27 @@ import { pageDishLoader } from "../pages/dish/loader";
 import { pageMealLoader } from "../pages/meal/loader";
 import { PageEditMeal } from "../pages/meal/_id/edit";
 import { pageEditMealLoader } from "../pages/meal/_id/edit/loader";
+import { PageGetMeal } from "../pages/meal/_id";
+import { pageGetMealLoader } from "../pages/meal/_id/loader";
+import { PageGetDish } from "../pages/dish/:dish-id";
+import { pageGetDishLoader } from "../pages/dish/:dish-id/loader";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <LayoutHeader />,
 		children: [
+			// ---------- GET -------------
+			{
+				path: ROUTES.MEAL.ID.path,
+				element: <PageGetMeal />,
+				loader: pageGetMealLoader,
+			},
+			{
+				path: ROUTES.DISH.ID.path,
+				element: <PageGetDish />,
+				loader: pageGetDishLoader,
+			},
 			// ---------- LIST ------------
 			{
 				path: ROUTES.MEAL.path,

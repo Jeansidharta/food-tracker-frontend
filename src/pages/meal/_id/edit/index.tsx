@@ -140,6 +140,7 @@ export const PageEditMeal: FC<object> = () => {
 				label="Eat date"
 				valueFormat="YYYY/MM/DD - HH[h] MM[m]"
 				placeholder="Pick date"
+				clearable
 				{...form.getInputProps("eat_date")}
 			/>
 			<NumberInput

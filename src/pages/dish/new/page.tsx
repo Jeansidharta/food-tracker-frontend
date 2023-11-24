@@ -126,6 +126,7 @@ export const PageNewDish: FC = () => {
 					<DateTimePicker
 						label="Prepped at"
 						valueFormat="YYYY/MM/DD - HH[h] MM[m]"
+						clearable
 						placeholder="Pick date"
 						{...form.getInputProps("prepDate")}
 					/>
@@ -135,7 +136,7 @@ export const PageNewDish: FC = () => {
 					{form.values.dish_ingredients.map((_ingredient, index) => (
 						<Group key={index} mt="xs">
 							<Select
-								style={{ flex: '1' }}
+								style={{ flex: "1" }}
 								placeholder="Select an ingredient"
 								data={(ingredientsList || []).map((ingredient) => ({
 									value: ingredient.id.toString(),

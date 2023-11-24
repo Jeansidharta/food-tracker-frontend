@@ -1,21 +1,11 @@
 import { FC } from "react";
-import styles from "./styles.module.css";
 import ago from "s-ago";
+import { Meal, MealDetails } from "../meal-details";
 import { SingleAccordion } from "../single-accordion";
-import { Divider, Group } from "@mantine/core";
-import { useMealGet } from "../../api/meals";
-import { Loading } from "../loading";
-import { DishItem } from "./dish-item";
+import { Group } from "@mantine/core";
 import { JustAteButton } from "./just-ate-button";
-import { EditMeal } from "./edit-meal";
-
-export type Meal = {
-	id: number;
-	creation_date: number;
-	eat_date?: number | null;
-	duration?: number | null;
-	description?: string | null;
-};
+import { Loading } from "../loading";
+import { useMealGet } from "../../api/meals";
 
 function makeEatDateString(eat_date?: number | null) {
 	return eat_date
@@ -25,8 +15,8 @@ function makeEatDateString(eat_date?: number | null) {
 		: "Not eaten yet";
 }
 
-const ShortMealContent: FC<{ meal: Meal }> = ({ meal }) => {
-	const { data, isLoading } = useMealGet(meal.id);
+const MealLoader: FC<{ meal_id: number }> = ({ meal_id }) => {
+	const { data, isLoading } = useMealGet(meal_id);
 
 	if (isLoading) {
 		return <Loading />;
@@ -34,33 +24,10 @@ const ShortMealContent: FC<{ meal: Meal }> = ({ meal }) => {
 	if (!data) {
 		return <div>No data</div>;
 	}
-	const { dishes, ingredients } = data;
 
-	const components = [...dishes, ...ingredients];
+	const { ingredients, dishes, meal } = data;
 
-	return (
-		<div className={styles.details_container}>
-			<p>id: {meal.id}</p>
-			<p>{makeEatDateString(meal.eat_date)}</p>
-			<p>Created {ago(new Date(meal.creation_date))}</p>
-			<p>Duration: {meal.duration ?? 0} minutes</p>
-			<Divider mt="xs" mb="xs" />
-			<div className={styles.components_container}>
-				{components.map((dish) => (
-					<DishItem key={dish.id} meal_id={meal.id} mealComponent={dish} />
-				))}
-			</div>
-			<Group mt="xs">
-				Total weight:{" "}
-				{components.reduce((acc, item) => acc + item.weight, 0) || 0}g
-			</Group>
-			<div style={{ width: "100%", marginTop: 12 }}>
-				<Group justify="space-between">
-					<EditMeal meal_id={meal.id} />
-				</Group>
-			</div>
-		</div>
-	);
+	return <MealDetails meal={meal} dishes={dishes} ingredients={ingredients} />;
 };
 
 export const ShortMeal: FC<{ meal: Meal }> = ({ meal }) => {
@@ -76,7 +43,7 @@ export const ShortMeal: FC<{ meal: Meal }> = ({ meal }) => {
 					)}
 				</>
 			}
-			content={<ShortMealContent meal={meal} />}
+			content={<MealLoader meal_id={meal.id} />}
 		/>
 	);
 };
