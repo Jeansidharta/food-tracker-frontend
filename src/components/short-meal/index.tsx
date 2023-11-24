@@ -7,6 +7,7 @@ import { useMealGet } from "../../api/meals";
 import { Loading } from "../loading";
 import { DishItem } from "./dish-item";
 import { JustAteButton } from "./just-ate-button";
+import { EditMeal } from "./edit-meal";
 
 export type Meal = {
 	id: number;
@@ -53,6 +54,11 @@ const ShortMealContent: FC<{ meal: Meal }> = ({ meal }) => {
 				Total weight:{" "}
 				{components.reduce((acc, item) => acc + item.weight, 0) || 0}g
 			</Group>
+			<div style={{ width: "100%", marginTop: 12 }}>
+				<Group justify="space-between">
+					<EditMeal meal_id={meal.id} />
+				</Group>
+			</div>
 		</div>
 	);
 };

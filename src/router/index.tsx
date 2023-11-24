@@ -16,6 +16,8 @@ import { pageIngredientsLoader } from "../pages/ingredient/loader";
 import { pageNewDishLoader } from "../pages/dish/new/loader";
 import { pageDishLoader } from "../pages/dish/loader";
 import { pageMealLoader } from "../pages/meal/loader";
+import { PageEditMeal } from "../pages/meal/_id/edit";
+import { pageEditMealLoader } from "../pages/meal/_id/edit/loader";
 
 const router = createBrowserRouter([
 	{
@@ -76,7 +78,8 @@ const router = createBrowserRouter([
 			// ---------- EDIT ------------
 			{
 				path: ROUTES.MEAL.ID.EDIT.path,
-				element: <PageEditDish />,
+				element: <PageEditMeal />,
+				loader: pageEditMealLoader,
 			},
 			{
 				path: ROUTES.DISH.ID.EDIT.path,

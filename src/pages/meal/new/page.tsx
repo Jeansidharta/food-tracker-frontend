@@ -134,8 +134,8 @@ export const PageNewMeal: FC = () => {
 										)}
 									>
 										<Group mt="xs">
-											<Radio value="Ingredient" label="Ingredient" />
 											<Radio value="Dish" label="Dish" />
+											<Radio value="Ingredient" label="Ingredient" />
 										</Group>
 									</Radio.Group>
 									{form.values.components[index].component_type ==
@@ -190,7 +190,7 @@ export const PageNewMeal: FC = () => {
 								<Button
 									onClick={() =>
 										form.insertListItem("components", {
-											component_type: "Ingredient",
+											component_type: "Dish",
 										})
 									}
 								>

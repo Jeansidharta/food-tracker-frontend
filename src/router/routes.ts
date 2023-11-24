@@ -29,7 +29,9 @@ export const ROUTES = {
 					params: { meal_id: number().defined() },
 				},
 				{
-					EDIT: route("edit"),
+					EDIT: route("edit", {
+						searchParams: { is_finished: boolean().default(false) },
+					}),
 				},
 			),
 		},
