@@ -6,7 +6,7 @@ export const pageNewMealLoader = async () => {
 		fetcher
 			.path("/dish/")
 			.method("get")
-			.create()({})
+			.create()({ is_finished: false })
 			.then((res) => res.data.data),
 		fetcher
 			.path("/ingredient/")

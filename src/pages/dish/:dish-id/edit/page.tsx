@@ -8,6 +8,7 @@ import {
 	Group,
 	NumberInput,
 	Select,
+	Switch,
 	TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -21,6 +22,7 @@ type FormValues = {
 	id: number;
 	prepDate?: Date;
 	total_weight: string;
+	is_finished: boolean;
 	dish_ingredients: { ingredient_id: string; weight: string }[];
 };
 
@@ -34,6 +36,7 @@ function formValuesToRequest(values: FormValues): EditDishParams {
 		name: values.name,
 		prep_date: values.prepDate?.getTime(),
 		total_weight: Number(values.total_weight),
+		is_finished: values.is_finished,
 		dish_ingredients: values.dish_ingredients.map((i) => ({
 			ingredient_id: Number(i.ingredient_id),
 			weight: Number(i.weight),
@@ -50,6 +53,7 @@ export const PageEditDish: FC<object> = () => {
 	const form = useForm<FormValues>({
 		initialValues: {
 			id: dish.id,
+			is_finished: dish.is_finished > 0,
 			name: dish.name ?? "",
 			prepDate: dish.prep_date ? new Date(dish.prep_date) : undefined,
 			total_weight: dish.total_weight.toString(),
@@ -88,6 +92,12 @@ export const PageEditDish: FC<object> = () => {
 				thousandSeparator="_"
 				hideControls
 				{...form.getInputProps(`total_weight`)}
+			/>
+			<Switch
+				mt="sm"
+				label="Is finished"
+				checked={form.values.is_finished}
+				onChange={(v) => form.setFieldValue("is_finished", v.target.checked)}
 			/>
 			<Divider mt="lg" />
 			<div className={styles.ingredientsContainer}>

@@ -77,6 +77,11 @@ export interface paths {
   };
   "/dish/": {
     get: {
+      parameters: {
+        query?: {
+          is_finished?: boolean | null;
+        };
+      };
       responses: {
         200: {
           content: {
@@ -86,8 +91,7 @@ export interface paths {
                   creation_date: number;
                   /** Format: int64 */
                   id: number;
-                  /** Format: int64 */
-                  ingredients_count: number;
+                  is_finished: boolean;
                   name?: string | null;
                   /** Format: int64 */
                   prep_date?: number | null;
@@ -125,6 +129,8 @@ export interface paths {
                   creation_date: number;
                   /** Format: int64 */
                   id: number;
+                  /** Format: int64 */
+                  is_finished: number;
                   name?: string | null;
                   /** Format: int64 */
                   prep_date?: number | null;
@@ -173,6 +179,8 @@ export interface paths {
                   creation_date: number;
                   /** Format: int64 */
                   id: number;
+                  /** Format: int64 */
+                  is_finished: number;
                   name?: string | null;
                   /** Format: int64 */
                   prep_date?: number | null;
@@ -210,6 +218,7 @@ export interface paths {
                 /** Format: int64 */
                 weight: number;
               }[] | null;
+            is_finished?: boolean | null;
             name: string;
             /** Format: int64 */
             prep_date?: number | null;
@@ -227,6 +236,8 @@ export interface paths {
                   creation_date: number;
                   /** Format: int64 */
                   id: number;
+                  /** Format: int64 */
+                  is_finished: number;
                   name?: string | null;
                   /** Format: int64 */
                   prep_date?: number | null;

@@ -5,7 +5,6 @@ import { SingleAccordion } from "../single-accordion";
 import { useDishGet } from "../../api/dishes";
 import { Loading } from "../loading";
 import { Divider, Group } from "@mantine/core";
-import { IconSitemap } from "@tabler/icons-react";
 import { IngredientItem } from "./ingredient-item";
 import { EditDish } from "./edit-dish";
 import { MealItem } from "./meal-item";
@@ -16,6 +15,7 @@ type Dish = {
 	prep_date?: number | undefined | null;
 	name?: string | undefined | null;
 	total_weight?: number | undefined | null;
+	is_finished?: boolean | undefined | null;
 };
 
 const ShortDishContent: FC<{ dish: Dish }> = ({ dish }) => {
@@ -92,20 +92,13 @@ const ShortDishContent: FC<{ dish: Dish }> = ({ dish }) => {
 
 export const ShortDish: FC<{
 	dish: Dish;
-	ingredients_count?: number;
-}> = ({ dish, ingredients_count }) => {
+}> = ({ dish }) => {
 	return (
 		<SingleAccordion
 			headerLeftSide={
 				<Group>
 					{dish.name} <Divider orientation="vertical" size="sm" />{" "}
-					<Group gap={2}>
-						{ingredients_count}
-						<IconSitemap
-							style={{ width: "16px", height: "16px" }}
-							stroke={1.5}
-						/>
-					</Group>
+					{dish.is_finished && "Finished"}
 				</Group>
 			}
 			headerRightSide={`Prepped ${ago(new Date(dish.prep_date ?? 0))}`}
