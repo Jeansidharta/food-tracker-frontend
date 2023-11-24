@@ -1,34 +1,18 @@
 .actionsBar {
-  background-color: var(--color-background-light);
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   padding: 16px;
   display: flex;
-  left: 0;
-  right: 0;
-  align-items: center;
-  column-gap: 16px;
+  flex-direction: column;
+  row-gap: 16px;
   justify-content: center;
-  box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.5);
-
-  a {
-    border-radius: 100%;
-    width: 128px;
-    height: 128px;
-    border: 2px solid var(--color-gray);
-    color: white;
-    padding: 16px;
-    background-color: var(--color-background);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-  }
 }
 
 .spacing {
   height: 200px;
   width: 1px;
+}
+
+.actionButton {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
 }

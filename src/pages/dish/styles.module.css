@@ -1,20 +1,22 @@
 .main {
-	padding: 16px;
+  padding: 16px;
 }
 
 .titleContainer {
-	display: flex;
-	column-gap: 8px;
-	align-items: center;
-}
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
 
-.titleContainer h1 {
-	text-align: center;
+  h1 {
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .dishesContainer {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	row-gap: 16px;
- }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 16px;
+}
