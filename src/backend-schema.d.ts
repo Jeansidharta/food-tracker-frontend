@@ -179,6 +179,15 @@ export interface paths {
                   /** Format: int64 */
                   total_weight: number;
                 };
+                used_at: ({
+                    /** Format: int64 */
+                    eat_date?: number | null;
+                    meal_description?: string | null;
+                    /** Format: int64 */
+                    meal_id: number;
+                    /** Format: int64 */
+                    weight?: number | null;
+                  })[];
               }) | null;
               message: string;
             };

@@ -1,4 +1,5 @@
 import { NewMealRequest, useNewMeal } from "../../../api/meals";
+import ago from "s-ago";
 import {
 	ActionIcon,
 	Anchor,
@@ -158,7 +159,9 @@ export const PageNewMeal: FC = () => {
 											placeholder="Select a dish"
 											data={(dishes || []).map((component) => ({
 												value: component.id.toString(),
-												label: component?.name || "",
+												label: `${component?.name || ""} (${ago(
+													new Date(component.creation_date),
+												)})`,
 											}))}
 											searchable
 											{...form.getInputProps(

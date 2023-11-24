@@ -33,21 +33,25 @@ const ShortMealContent: FC<{ meal: Meal }> = ({ meal }) => {
 	if (!data) {
 		return <div>No data</div>;
 	}
-	const { dishes } = data;
+	const { dishes, ingredients } = data;
+
+	const components = [...dishes, ...ingredients];
 
 	return (
 		<div className={styles.details_container}>
+			<p>id: {meal.id}</p>
 			<p>{makeEatDateString(meal.eat_date)}</p>
 			<p>Created {ago(new Date(meal.creation_date))}</p>
 			<p>Duration: {meal.duration ?? 0} minutes</p>
 			<Divider mt="xs" mb="xs" />
 			<div className={styles.components_container}>
-				{dishes.map((dish) => (
+				{components.map((dish) => (
 					<DishItem key={dish.id} meal_id={meal.id} mealComponent={dish} />
 				))}
 			</div>
 			<Group mt="xs">
-				Total weight: {dishes.reduce((acc, item) => acc + item.weight, 0)}g
+				Total weight:{" "}
+				{components.reduce((acc, item) => acc + item.weight, 0) || 0}g
 			</Group>
 		</div>
 	);
