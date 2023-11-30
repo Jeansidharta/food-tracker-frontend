@@ -12,7 +12,7 @@ export const ShortIngredient: FC<{
 	ingredient: Ingredient;
 }> = ({ ingredient }) => {
 	return (
-		<div className={styles.main}>
+		<div className={styles.shortDishMain}>
 			<div>{ingredient.name}</div>
 			<div className={styles.creationDate}>
 				{ago(new Date(ingredient.creation_date))}

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import ago from "s-ago";
-import { Meal, MealDetails } from "../meal-details";
-import { SingleAccordion } from "../single-accordion";
+import { Meal, MealDetails } from "../../components/meal-details";
+import { SingleAccordion } from "../../components/single-accordion";
 import { Group } from "@mantine/core";
-import { JustAteButton } from "./just-ate-button";
-import { Loading } from "../loading";
+import { JustAteButton } from "../../components/just-ate";
+import { Loading } from "../../components/loading";
 import { useMealGet } from "../../api/meals";
 
 function makeEatDateString(eat_date?: number | null) {

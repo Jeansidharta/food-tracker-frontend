@@ -1,7 +1,7 @@
 import { FC, Fragment, useMemo } from "react";
 import { Button, Divider, Group, Space } from "@mantine/core";
 import styles from "./styles.module.css";
-import { ShortMeal } from "../../components/short-meal";
+import { ShortMeal } from "./short-meal";
 import { usePageMealLoaderData } from "./loader";
 import { format as formatAgo } from "timeago.js";
 import {

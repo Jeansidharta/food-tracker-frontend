@@ -1,4 +1,4 @@
-import { ShortIngredient } from "../../components/short-ingredient";
+import { ShortIngredient } from "./short-ingredient";
 import styles from "./styles.module.css";
 import { usePageIngredientsLoaderData } from "./loader";
 import { Button, Divider, Group, Space } from "@mantine/core";

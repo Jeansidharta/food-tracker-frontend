@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-import { ShortDish } from "../../components/short-dish";
+import { ShortDish } from "./short-dish";
 import cookingPot from "../../assets/cooking-pot-primary.svg";
 import { usePageDishLoaderData } from "./loader";
 import { Divider, Group, Switch, Image, Button, Space } from "@mantine/core";

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import ago from "s-ago";
-import { SingleAccordion } from "../single-accordion";
+import { SingleAccordion } from "../../components/single-accordion";
 import { Divider, Group } from "@mantine/core";
-import { Dish, DishDetails } from "../dish-details";
+import { Dish, DishDetails } from "../../components/dish-details";
 import { useDishGet } from "../../api/dishes";
-import { Loading } from "../loading";
+import { Loading } from "../../components/loading";
 
 const DishLoader: FC<{ dish_id: number }> = ({ dish_id }) => {
 	const { data, isLoading } = useDishGet(dish_id);
