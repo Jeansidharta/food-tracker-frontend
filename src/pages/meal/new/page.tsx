@@ -17,6 +17,7 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../router/routes";
 import { usePageNewMealLoaderData } from "./loader";
+import { JustAteButton } from "../../../components/just-ate";
 
 type FormValues = {
 	duration: string;
@@ -202,6 +203,15 @@ export const PageNewMeal: FC = () => {
 				</Stepper.Step>
 				<Stepper.Completed>
 					<h2>Success!</h2>
+
+					{newMealData ? (
+						<p>
+							Are you going to eat it now? Click here!{" "}
+							<JustAteButton meal_id={newMealData.meal.id} />
+						</p>
+					) : (
+						<p> Meal data is not available :(</p>
+					)}
 
 					<p>
 						Would you like to{" "}

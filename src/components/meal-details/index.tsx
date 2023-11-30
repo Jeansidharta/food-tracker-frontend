@@ -7,6 +7,7 @@ import { EditMeal } from "./edit-meal";
 import { ROUTES } from "../../router/routes";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/date-format";
+import { JustAteButton } from "../just-ate";
 
 export type Meal = {
 	id: number;
@@ -21,17 +22,22 @@ export type MealComponent = {
 	weight: number;
 };
 
-function makeEatDateString(eat_date?: number | null) {
+function makeEatDateString(
+	eat_date: number | null | undefined,
+	mealId: number,
+) {
 	if (!eat_date) {
-		return "Not eaten yet";
+		return (
+			<>
+				Not eaten yet <JustAteButton meal_id={mealId} />
+			</>
+		);
 	}
 	const date = new Date(eat_date);
 	const date_string = formatDate(date, "YYYY/MM/DD - hh:mm");
-	return date
-		? date.getTime() < new Date().getTime()
-			? `Eaten ${date_string} (${ago(date)})`
-			: `Should eat ${date_string} (${ago(date)})`
-		: "Not eaten yet";
+	return date.getTime() < new Date().getTime()
+		? `Eaten ${date_string} (${ago(date)})`
+		: `Should eat ${date_string} (${ago(date)})`;
 }
 
 export const MealDetails: FC<{
@@ -51,7 +57,7 @@ export const MealDetails: FC<{
 					{meal.id}
 				</Link>
 			</p>
-			<p>{makeEatDateString(meal.eat_date)}</p>
+			<p>{makeEatDateString(meal.eat_date, meal.id)}</p>
 			<p>
 				Created {formatDate(creation_date, "YYYY/MM/DD - hh:mm")} (
 				{ago(creation_date)})
