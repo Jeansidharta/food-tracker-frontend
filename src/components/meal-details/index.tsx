@@ -6,6 +6,7 @@ import { DishItem } from "./dish-item";
 import { EditMeal } from "./edit-meal";
 import { ROUTES } from "../../router/routes";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/date-format";
 
 export type Meal = {
 	id: number;
@@ -21,10 +22,15 @@ export type MealComponent = {
 };
 
 function makeEatDateString(eat_date?: number | null) {
-	return eat_date
-		? eat_date < new Date().getTime()
-			? `Eaten ${ago(new Date(eat_date))}`
-			: `Should eat ${ago(new Date(eat_date))}`
+	if (!eat_date) {
+		return "Not eaten yet";
+	}
+	const date = new Date(eat_date);
+	const date_string = formatDate(date, "YYYY/MM/DD - hh:mm");
+	return date
+		? date.getTime() < new Date().getTime()
+			? `Eaten ${date_string} (${ago(date)})`
+			: `Should eat ${date_string} (${ago(date)})`
 		: "Not eaten yet";
 }
 
@@ -35,6 +41,8 @@ export const MealDetails: FC<{
 }> = ({ meal, ingredients, dishes }) => {
 	const components = [...dishes, ...ingredients];
 
+	const creation_date = new Date(meal.creation_date);
+
 	return (
 		<div className={styles.details_container}>
 			<p>
@@ -44,7 +52,10 @@ export const MealDetails: FC<{
 				</Link>
 			</p>
 			<p>{makeEatDateString(meal.eat_date)}</p>
-			<p>Created {ago(new Date(meal.creation_date))}</p>
+			<p>
+				Created {formatDate(creation_date, "YYYY/MM/DD - hh:mm")} (
+				{ago(creation_date)})
+			</p>
 			<p>Duration: {meal.duration ?? 0} minutes</p>
 			<Divider mt="xs" mb="xs" />
 			<div className={styles.components_container}>

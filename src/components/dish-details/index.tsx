@@ -1,4 +1,5 @@
 import styles from "./styles.module.css";
+import ago from "s-ago";
 import { FC } from "react";
 import { Divider, Group } from "@mantine/core";
 import { IngredientItem } from "./ingredient-item";
@@ -6,6 +7,7 @@ import { EditDish } from "./edit-dish";
 import { MealItem } from "./meal-item";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../router/routes";
+import { formatDate } from "../../utils/date-format";
 
 export type Dish = {
 	id: number;
@@ -43,6 +45,7 @@ export const DishDetails: FC<{
 		? dish.total_weight - total_used
 		: total_added_ingredients - total_used;
 
+	const prep_date = new Date(dish.prep_date || dish.creation_date);
 	return (
 		<div className={styles.details_container}>
 			<p>
@@ -50,6 +53,10 @@ export const DishDetails: FC<{
 				<Link to={ROUTES.DISH.ID.buildPath({ dish_id: dish.id })}>
 					{dish.id}
 				</Link>
+			</p>
+			<p>
+				Prepared {formatDate(prep_date, "YYYY/MM/DD - hh:mm")} ({ago(prep_date)}
+				)
 			</p>
 			<p>
 				Initial weight: {dish.total_weight ? `${dish.total_weight}g` : "None"}
