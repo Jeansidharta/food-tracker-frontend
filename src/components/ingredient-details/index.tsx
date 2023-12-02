@@ -4,6 +4,7 @@ import { ActionIcon, Divider } from "@mantine/core";
 import { IconCamera } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../router/routes";
+import { RefreshProperties } from "./refresh-properties";
 
 export const IngredientDetails: FC<{
 	ingredient: {
@@ -42,6 +43,10 @@ export const IngredientDetails: FC<{
 						{ingredient.kcal_100g || "Not found. Please update open food facts"}{" "}
 						Kcal
 					</p>
+					<RefreshProperties
+						product_code={ingredient.product_code}
+						ingredient_id={ingredient.id}
+					/>
 				</>
 			)}
 		</div>
