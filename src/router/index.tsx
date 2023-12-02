@@ -22,6 +22,10 @@ import { PageGetMeal } from "../pages/meal/_id";
 import { pageGetMealLoader } from "../pages/meal/_id/loader";
 import { PageGetDish } from "../pages/dish/:dish-id";
 import { pageGetDishLoader } from "../pages/dish/:dish-id/loader";
+import { PageIngredientScan } from "../pages/ingredient/:ingredient-id/scan/page";
+import { pageScanIngredientLoader } from "../pages/ingredient/:ingredient-id/scan/loader";
+import { PageGetIngredient } from "../pages/ingredient/:ingredient-id/page";
+import { pageGetIngredientLoader } from "../pages/ingredient/:ingredient-id/loader";
 
 const router = createBrowserRouter([
 	{
@@ -29,6 +33,11 @@ const router = createBrowserRouter([
 		element: <LayoutHeader />,
 		children: [
 			// ---------- GET -------------
+			{
+				path: ROUTES.INGREDIENT.ID.path,
+				element: <PageGetIngredient />,
+				loader: pageGetIngredientLoader,
+			},
 			{
 				path: ROUTES.MEAL.ID.path,
 				element: <PageGetMeal />,
@@ -100,6 +109,11 @@ const router = createBrowserRouter([
 				path: ROUTES.DISH.ID.EDIT.path,
 				element: <PageEditDish />,
 				loader: pageEditDishLoader,
+			},
+			{
+				path: ROUTES.INGREDIENT.ID.SCAN.path,
+				element: <PageIngredientScan />,
+				loader: pageScanIngredientLoader,
 			},
 		],
 	},

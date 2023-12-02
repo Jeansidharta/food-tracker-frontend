@@ -6,7 +6,7 @@ import { Collapse } from "@mantine/core";
 export const SingleAccordion: FC<{
 	headerLeftSide: ReactNode;
 	headerRightSide: ReactNode;
-	content: ReactNode;
+	content?: ReactNode;
 	onOpen?: () => void;
 }> = ({ content, headerLeftSide, headerRightSide, onOpen = () => { } }) => {
 	const [isOpen, setIsOpen] = useState(false);

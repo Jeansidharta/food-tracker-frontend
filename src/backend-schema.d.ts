@@ -50,24 +50,59 @@ export interface paths {
       };
     };
   };
-  "/ingredient/{id}": {
+  "/ingredient/{ingredient_id}/": {
     get: {
       parameters: {
         path: {
-          id: number;
+          ingredient_id: number;
         };
       };
       responses: {
         200: {
           content: {
             "application/json": {
-              data?: {
+              data?: ({
                 /** Format: int64 */
                 creation_date: number;
                 /** Format: int64 */
                 id: number;
-                name: string;
-              } | null;
+                /** Format: int64 */
+                kcal_100g?: number | null;
+                name?: string | null;
+                product_code?: string | null;
+              }) | null;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/ingredient/{ingredient_id}/properties/": {
+    post: {
+      parameters: {
+        path: {
+          ingredient_id: number;
+        };
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            product_code: string;
+          };
+        };
+      };
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              data?: ({
+                /** Format: int64 */
+                ingredient_id: number;
+                /** Format: int64 */
+                kcal_100g?: number | null;
+                product_code: string;
+              }) | null;
               message: string;
             };
           };
@@ -166,15 +201,17 @@ export interface paths {
           content: {
             "application/json": {
               data?: ({
-                added_ingredients: {
+                added_ingredients: ({
                     /** Format: int64 */
                     addition_date: number;
                     /** Format: int64 */
                     ingredient_id: number;
                     ingredient_name: string;
                     /** Format: int64 */
+                    kcal_100g?: number | null;
+                    /** Format: int64 */
                     weight: number;
-                  }[];
+                  })[];
                 dish: {
                   /** Format: int64 */
                   creation_date: number;
@@ -566,6 +603,8 @@ export interface paths {
                 dishes: ({
                     /** Format: int64 */
                     id: number;
+                    /** Format: int64 */
+                    kcal_100g?: number | null;
                     name?: string | null;
                     /** Format: int64 */
                     weight: number;
@@ -573,6 +612,8 @@ export interface paths {
                 ingredients: ({
                     /** Format: int64 */
                     id: number;
+                    /** Format: int64 */
+                    kcal_100g?: number | null;
                     name?: string | null;
                     /** Format: int64 */
                     weight: number;
