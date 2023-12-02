@@ -30,6 +30,7 @@ export type AddedIngredient = {
 	weight: number;
 	ingredient_name: string;
 	ingredient_id: number;
+	kcal_100g?: number | null;
 };
 
 export const DishDetails: FC<{
@@ -41,6 +42,12 @@ export const DishDetails: FC<{
 		used_at.reduce((acc, item) => acc + (item.weight ?? 0), 0) || 0;
 	const total_added_ingredients =
 		added_ingredients.reduce((acc, item) => acc + item.weight, 0) || 0;
+	const total_calories =
+		added_ingredients.reduce(
+			(acc, item) =>
+				acc + Math.round(((item.kcal_100g || 0) * item.weight) / 100),
+			0,
+		) || 0;
 	const remaining = dish.total_weight
 		? dish.total_weight - total_used
 		: total_added_ingredients - total_used;
@@ -73,6 +80,14 @@ export const DishDetails: FC<{
 				))}
 			</div>
 			<Group mt="xs">Added weights: {total_added_ingredients}g</Group>
+			<Group mt="xs">
+				Calories: total {total_calories} kcal (
+				{Math.round(
+					(total_calories * 100) /
+					(dish.total_weight || total_added_ingredients),
+				) || "0"}{" "}
+				kcal / 100g)
+			</Group>
 			<Divider my="md" />
 			{used_at.length > 0 ? (
 				<>

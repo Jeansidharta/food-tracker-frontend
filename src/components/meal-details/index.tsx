@@ -20,6 +20,7 @@ export type Meal = {
 export type MealComponent = {
 	id: number;
 	weight: number;
+	kcal_100g?: number | null;
 };
 
 function makeEatDateString(
@@ -48,6 +49,14 @@ export const MealDetails: FC<{
 	const components = [...dishes, ...ingredients];
 
 	const creation_date = new Date(meal.creation_date);
+	const total_calories =
+		components.reduce(
+			(acc, item) =>
+				acc + Math.round(((item.kcal_100g || 0) * item.weight) / 100),
+			0,
+		) || 0;
+	const total_weight =
+		components.reduce((acc, item) => acc + item.weight, 0) || 0;
 
 	return (
 		<div className={styles.details_container}>
@@ -69,10 +78,8 @@ export const MealDetails: FC<{
 					<DishItem key={dish.id} meal_id={meal.id} mealComponent={dish} />
 				))}
 			</div>
-			<Group mt="xs">
-				Total weight:{" "}
-				{components.reduce((acc, item) => acc + item.weight, 0) || 0}g
-			</Group>
+			<Group mt="xs">Total weight: {total_weight}g</Group>
+			<Group mt="xs">Calories: {total_calories || "0"} kcal</Group>
 			<div style={{ width: "100%", marginTop: 12 }}>
 				<Group justify="space-between">
 					<EditMeal meal_id={meal.id} />
