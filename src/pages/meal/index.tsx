@@ -45,9 +45,11 @@ export const PageMeal: FC = () => {
 			{uneatenMeals.length > 0 && (
 				<>
 					<h2>Not eaten yet</h2>
-					{uneatenMeals.map((meal) => (
-						<ShortMeal meal={meal} key={meal.id} />
-					))}
+					<div style={{ display: "flex", flexDirection: "column", rowGap: 16 }}>
+						{uneatenMeals.map((meal) => (
+							<ShortMeal meal={meal} key={meal.id} />
+						))}
+					</div>
 					<Divider my="md" />
 				</>
 			)}

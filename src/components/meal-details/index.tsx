@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./styles.module.css";
 import ago from "s-ago";
 import { Divider, Group } from "@mantine/core";
-import { DishItem } from "./dish-item";
+import { ComponentItem } from "./dish-item";
 import { EditMeal } from "./edit-meal";
 import { ROUTES } from "../../router/routes";
 import { Link } from "react-router-dom";
@@ -46,7 +46,13 @@ export const MealDetails: FC<{
 	dishes: MealComponent[];
 	ingredients: MealComponent[];
 }> = ({ meal, ingredients, dishes }) => {
-	const components = [...dishes, ...ingredients];
+	const components = [
+		...dishes.map((dish) => ({ ...dish, type: "dish" as const })),
+		...ingredients.map((ingredient) => ({
+			...ingredient,
+			type: "ingredient" as const,
+		})),
+	];
 
 	const creation_date = new Date(meal.creation_date);
 	const total_calories =
@@ -74,8 +80,8 @@ export const MealDetails: FC<{
 			<p>Duration: {meal.duration ?? 0} minutes</p>
 			<Divider mt="xs" mb="xs" />
 			<div className={styles.components_container}>
-				{components.map((dish) => (
-					<DishItem key={dish.id} meal_id={meal.id} mealComponent={dish} />
+				{components.map((component) => (
+					<ComponentItem key={component.id} mealComponent={component} />
 				))}
 			</div>
 			<Group mt="xs">Total weight: {total_weight}g</Group>
