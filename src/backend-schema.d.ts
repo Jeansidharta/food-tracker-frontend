@@ -80,14 +80,24 @@ export interface paths {
           content: {
             "application/json": {
               data: {
-                /** Format: int64 */
-                creation_date: number;
-                /** Format: int64 */
-                id: number;
-                /** Format: int64 */
-                kcal_100g?: number | null;
-                name?: string | null;
-                product_code?: string | null;
+                ingredient: {
+                  /** Format: int64 */
+                  creation_date: number;
+                  /** Format: int64 */
+                  id: number;
+                  name: string;
+                };
+                ingredient_properties?: ({
+                  /** Format: int64 */
+                  carbohydrates_100g?: number | null;
+                  /** Format: int64 */
+                  fat_100g?: number | null;
+                  /** Format: int64 */
+                  kcal_100g?: number | null;
+                  product_code: string;
+                  /** Format: int64 */
+                  proteins_100g?: number | null;
+                }) | null;
               };
               message: string;
             };

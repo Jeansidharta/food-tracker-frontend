@@ -16,6 +16,18 @@ const theme = createTheme({
 			"#cb00be",
 			"#b100a6",
 		],
+		teal: [
+			"#deffff",
+			"#caffff",
+			"#99fcff",
+			"#64faff",
+			"#3df9ff",
+			"#26f8ff",
+			"#09f7ff",
+			"#00dce3",
+			"#00c4ca",
+			"#00aab0",
+		],
 		warning: [
 			"#fff6e0",
 			"#ffeccb",

@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { ActionIcon, Button, Group, Modal } from "@mantine/core";
+import { Button, Group, Modal, Space } from "@mantine/core";
 import { IconRefresh } from "@tabler/icons-react";
 import { useScanIngredient } from "../../api/ingredients";
 
@@ -18,9 +18,16 @@ export const RefreshProperties: FC<{
 
 	return (
 		<>
-			<ActionIcon size="xs" onClick={() => setIsOpen(true)}>
+			<Button
+				color="teal"
+				variant="outline"
+				size="xs"
+				onClick={() => setIsOpen(true)}
+			>
+				Refresh
+				<Space w="xs" />
 				<IconRefresh style={{ width: "70%", height: "70%" }} stroke={1.5} />
-			</ActionIcon>
+			</Button>
 
 			<Modal
 				onClick={(event) => event.stopPropagation()}

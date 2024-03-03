@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from "react";
 import { BarcodeScanner } from "../../../../components/barcode-scanner";
-import { Button, Group, MultiSelect, TextInput } from "@mantine/core";
+import { Button, Group, MultiSelect, TextInput, Text } from "@mantine/core";
 import { useScanIngredient } from "../../../../api/ingredients";
 import { usePageScanIngredientLoaderData } from "./loader";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,11 @@ export const PageIngredientScan: FC = () => {
 	const [hasScannedBarcode, setHasScannedBarcode] = useState<boolean>(false);
 	const { ingredient_id } = usePageScanIngredientLoaderData();
 	const [readers, setReaders] = useState<QuaggaJSCodeReader[]>(["upc_reader"]);
-	const { scanIngredient, isMutating: isLoadingSubmit } = useScanIngredient();
+	const {
+		scanIngredient,
+		isMutating: isLoadingSubmit,
+		error,
+	} = useScanIngredient();
 	const navigate = useNavigate();
 
 	async function submit() {
@@ -40,6 +44,7 @@ export const PageIngredientScan: FC = () => {
 	return (
 		<div>
 			<h1>Scanning Ingredient</h1>
+			<Text></Text>
 			<div>
 				<Group my="md">
 					<Group align="end">
@@ -47,6 +52,7 @@ export const PageIngredientScan: FC = () => {
 							label="Barcode"
 							onChange={(code) => setBarcode(code.target.value)}
 							value={barcode || ""}
+							error={error}
 						/>
 						<Button
 							onClick={submit}

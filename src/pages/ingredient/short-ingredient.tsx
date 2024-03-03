@@ -14,16 +14,21 @@ type Ingredient = {
 };
 
 const IngredientLoader: FC<{ ingredient_id: number }> = ({ ingredient_id }) => {
-	const { data: ingredient, isLoading } = useIngredientGet(ingredient_id);
+	const { data, isLoading } = useIngredientGet(ingredient_id);
 
 	if (isLoading) {
 		return <Loading />;
 	}
-	if (!ingredient) {
+	if (!data) {
 		return <div>No data</div>;
 	}
 
-	return <IngredientDetails ingredient={ingredient} />;
+	return (
+		<IngredientDetails
+			ingredient={data.ingredient}
+			properties={data.ingredient_properties}
+		/>
+	);
 };
 
 export const ShortIngredient: FC<{

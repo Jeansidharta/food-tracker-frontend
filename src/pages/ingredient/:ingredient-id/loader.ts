@@ -10,16 +10,16 @@ export const pageGetIngredientLoader = async ({
 	if (!Number.isFinite(ingredient_id)) {
 		throw new Error("Ingredient id is not a number");
 	}
-	const ingredient_data = await fetcher
+	const { ingredient, ingredient_properties: properties } = await fetcher
 		.path("/ingredient/{ingredient_id}/")
 		.method("get")
 		.create()({ ingredient_id })
 		.then((res) => res.data.data);
 
-	if (!ingredient_data) {
+	if (!ingredient) {
 		throw new Error("Ingredient does not exist");
 	}
-	return { ingredient: ingredient_data };
+	return { ingredient, properties };
 };
 
 export function usePageGetIngredientLoaderData() {
