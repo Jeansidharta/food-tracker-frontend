@@ -1,34 +1,27 @@
 import { FC, useEffect, useRef, useState } from "react";
-import Quagga from "@ericblade/quagga2";
+import Quagga, { QuaggaJSCodeReader } from "@ericblade/quagga2";
 import { Scanner } from "./scanner";
-import { Group, Select, Switch } from "@mantine/core";
+import { Group, Select } from "@mantine/core";
 
 export const BarcodeScanner: FC<{
 	onDetected?: (result: string) => void;
+
+	readers: QuaggaJSCodeReader[];
 	enabled?: boolean;
-}> = ({ onDetected, enabled = true }) => {
+}> = ({ onDetected, enabled = true, readers }) => {
 	const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]); // array of available cameras, as returned by Quagga.CameraAccess.enumerateVideoDevices()
 	const [cameraId, setCameraId] = useState<string | null>(null); // id of the active camera device
 	const [cameraError, setCameraError] = useState(null); // error message from failing to access the camera
-	const [torchOn, setTorch] = useState(false); // toggleable state for "should torch be on"
 	const scannerRef = useRef(null);
 
 	useEffect(() => {
 		async function run() {
-			// Enable camera
-			await Quagga.CameraAccess.request(null, {});
-			// Disable camera
-			await Quagga.CameraAccess.release();
-			// enumerateCameras
 			const cameras = await Quagga.CameraAccess.enumerateVideoDevices();
-
 			setCameras(cameras);
-			await Quagga.CameraAccess.disableTorch();
 			setCameraId(cameras[0].deviceId);
 		}
 		run().catch((err) => setCameraError(err));
 		return () => {
-			// Disable camera
 			Quagga.CameraAccess.release();
 		};
 	}, []);
@@ -49,7 +42,7 @@ export const BarcodeScanner: FC<{
 					</p>
 				) : (
 					<Select
-						placeholder="Cameras"
+						label="Cameras"
 						onChange={(value) => setCameraId(value)}
 						value={cameraId}
 						data={cameras.map((camera) => ({
@@ -58,12 +51,6 @@ export const BarcodeScanner: FC<{
 						}))}
 					/>
 				)}
-				<Switch
-					defaultChecked
-					label="Torch"
-					checked={torchOn}
-					onChange={(value) => setTorch(value.currentTarget.checked)}
-				/>
 			</Group>
 			<div ref={scannerRef} style={{ position: "relative" }}>
 				<canvas
@@ -81,6 +68,8 @@ export const BarcodeScanner: FC<{
 						scannerRef={scannerRef}
 						cameraId={{ exact: cameraId! }}
 						onDetected={onDetected}
+						facingMode={{ ideal: "environment" }}
+						readers={readers}
 					/>
 				)}
 			</div>

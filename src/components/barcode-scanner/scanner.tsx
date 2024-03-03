@@ -1,5 +1,6 @@
 import { FC, useCallback, useLayoutEffect } from "react";
 import Quagga, {
+	QuaggaJSCodeReader,
 	QuaggaJSConfigObject,
 	QuaggaJSResultObject,
 	QuaggaJSResultObject_CodeResult,
@@ -43,6 +44,7 @@ export const Scanner: FC<{
 	locator?: QuaggaJSConfigObject["locator"];
 	constraints?: MediaTrackConstraints;
 	locate?: boolean;
+	readers: QuaggaJSCodeReader[];
 }> = ({
 	onDetected,
 	scannerRef,
@@ -52,6 +54,7 @@ export const Scanner: FC<{
 	constraints = defaultConstraints,
 	locator = defaultLocatorSettings,
 	locate = true,
+	readers,
 }) => {
 		const errorCheck = useCallback(
 			(result: QuaggaJSResultObject) => {
@@ -137,7 +140,7 @@ export const Scanner: FC<{
 							willReadFrequently: true,
 						},
 						locator,
-						decoder: { readers: ["upc_reader"] },
+						decoder: { readers },
 						locate,
 					},
 					async (err) => {
@@ -174,6 +177,7 @@ export const Scanner: FC<{
 			locator,
 			locate,
 			facingMode,
+			readers,
 		]);
 		return null;
 	};

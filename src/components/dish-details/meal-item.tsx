@@ -7,14 +7,15 @@ import { ROUTES } from "../../router/routes";
 export const MealItem: FC<{
 	meal_id: number;
 	weight: number;
-	eat_date: number;
+	eat_date?: number | null;
 	meal_description: string;
 }> = ({ meal_id, weight, meal_description, eat_date }) => {
 	return (
 		<Link to={ROUTES.MEAL.ID.buildPath({ meal_id })}>
 			<div className={styles.ingredient_item}>
 				<div>
-					{weight}g in {meal_description} ({ago(new Date(eat_date))})
+					{weight}g in {meal_description}
+					{eat_date ? ` (${ago(new Date(eat_date))})` : ""}
 				</div>
 			</div>
 		</Link>

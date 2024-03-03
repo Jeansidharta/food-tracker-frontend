@@ -6,7 +6,7 @@ export const pageNewDishLoader = async () => {
 		.path("/ingredient/")
 		.method("get")
 		.create()({})
-		.then((res) => res.data.data);
+		.then((res) => res.data.data.ingredients);
 	return data;
 };
 

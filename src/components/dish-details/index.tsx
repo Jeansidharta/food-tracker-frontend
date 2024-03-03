@@ -8,6 +8,7 @@ import { MealItem } from "./meal-item";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../router/routes";
 import { formatDate } from "../../utils/date-format";
+import { CaloriesCount } from "./calories-count";
 
 export type Dish = {
 	id: number;
@@ -40,17 +41,11 @@ export const DishDetails: FC<{
 }> = ({ added_ingredients, used_at, dish }) => {
 	const total_used =
 		used_at.reduce((acc, item) => acc + (item.weight ?? 0), 0) || 0;
-	const total_added_ingredients =
+	const sum_weight_added_ingredients =
 		added_ingredients.reduce((acc, item) => acc + item.weight, 0) || 0;
-	const total_calories =
-		added_ingredients.reduce(
-			(acc, item) =>
-				acc + Math.round(((item.kcal_100g || 0) * item.weight) / 100),
-			0,
-		) || 0;
 	const remaining = dish.total_weight
 		? dish.total_weight - total_used
-		: total_added_ingredients - total_used;
+		: sum_weight_added_ingredients - total_used;
 
 	const prep_date = new Date(dish.prep_date || dish.creation_date);
 	return (
@@ -79,15 +74,11 @@ export const DishDetails: FC<{
 					/>
 				))}
 			</div>
-			<Group mt="xs">Added weights: {total_added_ingredients}g</Group>
-			<Group mt="xs">
-				Calories: total {total_calories} kcal (
-				{Math.round(
-					(total_calories * 100) /
-					(dish.total_weight || total_added_ingredients),
-				) || "0"}{" "}
-				kcal / 100g)
-			</Group>
+			<Group mt="xs">Added weights: {sum_weight_added_ingredients}g</Group>
+			<CaloriesCount
+				dishWeight={dish.total_weight || sum_weight_added_ingredients}
+				addedIngredients={added_ingredients}
+			/>
 			<Divider my="md" />
 			{used_at.length > 0 ? (
 				<>
@@ -98,7 +89,7 @@ export const DishDetails: FC<{
 								key={usedAt.meal_id}
 								meal_id={usedAt.meal_id}
 								weight={usedAt.weight ?? 0}
-								eat_date={usedAt.eat_date ?? 0}
+								eat_date={usedAt.eat_date}
 								meal_description={usedAt.meal_description ?? ""}
 							/>
 						))}
@@ -106,7 +97,7 @@ export const DishDetails: FC<{
 					<div>
 						<p>
 							Total used: {total_used}g /{" "}
-							{dish.total_weight || total_added_ingredients || "???"}g
+							{dish.total_weight || sum_weight_added_ingredients || "???"}g
 						</p>
 						<p>Remaining: {remaining}g</p>
 					</div>

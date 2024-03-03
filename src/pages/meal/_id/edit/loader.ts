@@ -22,7 +22,7 @@ export const pageEditMealLoader = async ({
 				.path("/ingredient/")
 				.method("get")
 				.create()({})
-				.then((res) => res.data.data),
+				.then((res) => res.data.data.ingredients),
 			fetcher
 				.path("/dish/")
 				.method("get")

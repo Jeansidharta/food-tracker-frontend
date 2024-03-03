@@ -19,8 +19,9 @@ export const IngredientItem: FC<{
 			<Link to={ROUTES.INGREDIENT.ID.buildPath({ ingredient_id })}>
 				<div className={styles.ingredient_item}>
 					<div>
-						{weight}g of {ingredient_name} (
-						{Math.round(((kcal_100g || 0) * weight) / 100)} kcal)
+						{weight}g of {ingredient_name}
+						{typeof kcal_100g === "number" &&
+							` (${Math.round((kcal_100g * weight) / 100)} kcal)`}
 					</div>
 				</div>
 			</Link>

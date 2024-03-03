@@ -21,7 +21,7 @@ export const pageEditDishLoader = async ({
 			.path("/ingredient/")
 			.method("get")
 			.create()({})
-			.then((res) => res.data.data),
+			.then((res) => res.data.data.ingredients),
 	]);
 	if (!dish_data) {
 		throw new Error("Dish does not exist");

@@ -53,13 +53,33 @@ export function useScanIngredient() {
 		async (
 			_key: string,
 			{ arg }: { arg: Parameters<typeof scanIngredientFetcher>[0] },
-		) => scanIngredientFetcher(arg),
+		) =>
+			scanIngredientFetcher(arg)
+				.then((a) => {
+					console.log("then", a);
+					return a;
+				})
+				.catch((a) => {
+					console.log("catch", a);
+					throw a;
+				}),
 	);
-	const { data, trigger, ...values } = response;
+	const { data, trigger, error, ...values } = response;
+
+	let errorMessage: string | null = null;
+
+	if (error) {
+		if (error?.message.startsWith("NetworkError")) {
+			errorMessage = "Could not connect to the backend";
+		} else {
+			errorMessage = error.getActualType().data.message;
+		}
+	}
 
 	return {
 		...values,
 		data: data?.data.data,
 		scanIngredient: trigger,
+		errorMessage,
 	} as const;
 }

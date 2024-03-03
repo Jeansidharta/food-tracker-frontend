@@ -12,7 +12,7 @@ export const pageNewMealLoader = async () => {
 			.path("/ingredient/")
 			.method("get")
 			.create()({})
-			.then((res) => res.data.data),
+			.then((res) => res.data.data.ingredients),
 		fetcher
 			.path("/meal/description/")
 			.method("get")

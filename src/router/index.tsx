@@ -26,6 +26,7 @@ import { PageIngredientScan } from "../pages/ingredient/:ingredient-id/scan/page
 import { pageScanIngredientLoader } from "../pages/ingredient/:ingredient-id/scan/loader";
 import { PageGetIngredient } from "../pages/ingredient/:ingredient-id/page";
 import { pageGetIngredientLoader } from "../pages/ingredient/:ingredient-id/loader";
+import { ErrorHandler } from "../components/error-handler";
 
 const router = createBrowserRouter([
 	{
@@ -36,16 +37,19 @@ const router = createBrowserRouter([
 			{
 				path: ROUTES.INGREDIENT.ID.path,
 				element: <PageGetIngredient />,
+				errorElement: <ErrorHandler />,
 				loader: pageGetIngredientLoader,
 			},
 			{
 				path: ROUTES.MEAL.ID.path,
 				element: <PageGetMeal />,
+				errorElement: <ErrorHandler />,
 				loader: pageGetMealLoader,
 			},
 			{
 				path: ROUTES.DISH.ID.path,
 				element: <PageGetDish />,
+				errorElement: <ErrorHandler />,
 				loader: pageGetDishLoader,
 			},
 			// ---------- LIST ------------
@@ -63,6 +67,7 @@ const router = createBrowserRouter([
 			{
 				path: ROUTES.DISH.path,
 				element: <LayoutActions />,
+				errorElement: <ErrorHandler />,
 				children: [
 					{
 						path: ROUTES.DISH.path,
@@ -74,6 +79,7 @@ const router = createBrowserRouter([
 			{
 				path: ROUTES.INGREDIENT.path,
 				element: <LayoutActions />,
+				errorElement: <ErrorHandler />,
 				children: [
 					{
 						path: ROUTES.INGREDIENT.path,
@@ -87,16 +93,19 @@ const router = createBrowserRouter([
 			{
 				path: ROUTES.INGREDIENT.NEW.path,
 				element: <PageNewIngredient />,
+				errorElement: <ErrorHandler />,
 			},
 			{
 				path: ROUTES.DISH.NEW.path,
 				element: <PageNewDish />,
 				loader: pageNewDishLoader,
+				errorElement: <ErrorHandler />,
 			},
 			{
 				path: ROUTES.MEAL.NEW.path,
 				element: <PageNewMeal />,
 				loader: pageNewMealLoader,
+				errorElement: <ErrorHandler />,
 			},
 
 			// ---------- EDIT ------------
@@ -104,16 +113,19 @@ const router = createBrowserRouter([
 				path: ROUTES.MEAL.ID.EDIT.path,
 				element: <PageEditMeal />,
 				loader: pageEditMealLoader,
+				errorElement: <ErrorHandler />,
 			},
 			{
 				path: ROUTES.DISH.ID.EDIT.path,
 				element: <PageEditDish />,
 				loader: pageEditDishLoader,
+				errorElement: <ErrorHandler />,
 			},
 			{
 				path: ROUTES.INGREDIENT.ID.SCAN.path,
 				element: <PageIngredientScan />,
 				loader: pageScanIngredientLoader,
+				errorElement: <ErrorHandler />,
 			},
 		],
 	},
