@@ -95,6 +95,7 @@ export interface paths {
                   /** Format: int64 */
                   kcal_100g?: number | null;
                   product_code: string;
+                  product_name?: string | null;
                   /** Format: int64 */
                   proteins_100g?: number | null;
                 }) | null;
@@ -252,7 +253,7 @@ export interface paths {
                     ingredient_id: number;
                     ingredient_name: string;
                     /** Format: int64 */
-                    kcal_100g?: number | null;
+                    kcal?: number | null;
                     /** Format: int64 */
                     weight: number;
                   })[];
@@ -646,19 +647,31 @@ export interface paths {
               data: {
                 dishes: ({
                     /** Format: int64 */
+                    carbohydrates?: number | null;
+                    /** Format: int64 */
+                    fat?: number | null;
+                    /** Format: int64 */
                     id: number;
                     /** Format: int64 */
-                    kcal_100g?: number | null;
+                    kcal?: number | null;
                     name?: string | null;
+                    /** Format: int64 */
+                    proteins?: number | null;
                     /** Format: int64 */
                     weight: number;
                   })[];
                 ingredients: ({
                     /** Format: int64 */
+                    carbohydrates?: number | null;
+                    /** Format: int64 */
+                    fat?: number | null;
+                    /** Format: int64 */
                     id: number;
                     /** Format: int64 */
-                    kcal_100g?: number | null;
+                    kcal?: number | null;
                     name?: string | null;
+                    /** Format: int64 */
+                    proteins?: number | null;
                     /** Format: int64 */
                     weight: number;
                   })[];

@@ -31,7 +31,7 @@ export type AddedIngredient = {
 	weight: number;
 	ingredient_name: string;
 	ingredient_id: number;
-	kcal_100g?: number | null;
+	kcal?: number | null;
 };
 
 export const DishDetails: FC<{

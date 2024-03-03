@@ -9,14 +9,11 @@ export const CaloriesCount: FC<{
 }> = ({ addedIngredients, dishWeight }) => {
 	const total_calories = addedIngredients.reduce(
 		({ value, status }, item) => ({
-			value:
-				typeof item.kcal_100g === "number"
-					? (value || 0) + Math.round((item.kcal_100g * item.weight) / 100)
-					: value,
+			value: typeof item.kcal === "number" ? (value || 0) + item.kcal : value,
 			status:
-				status === "none" && typeof item.kcal_100g === "number"
+				status === "none" && typeof item.kcal === "number"
 					? "full"
-					: status === "full" && typeof item.kcal_100g !== "number"
+					: status === "full" && typeof item.kcal !== "number"
 						? "partial"
 						: status,
 		}),
