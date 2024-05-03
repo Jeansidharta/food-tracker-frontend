@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --outDir /var/www/html/foodtracker && chgrp --recursive www /var/www/html/foodtracker",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "backend-codegen": "openapi-typescript http://127.0.0.1:8000/openapi.json -o src/backend-schema.d.ts"
